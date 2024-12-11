@@ -1,0 +1,27 @@
+>:)
+
+RECIPE => CATEGORY (ManyToOne)
+
+RECIPE => contain_ (OneToMany)
+
+contain_ => RECIPE (ManyToOne)
+
+RECIPE => COMMENT (OneToMany)
+
+RECIPE => PHOTO (OneToMany)
+
+RECIPE => COLLECTION (ManyToMany)
+
+RECIPE => favorite (OneToMany)
+
+favorite => USER_ (ManyToOne)
+
+COLLECTION => TAG (ManyToMany)
+
+COLLECTION => USER_ (ManyToMany)
+
+USER_ => COMMENT (OneToMany)
+
+USER_ => FRIEND (OneToMany)
+
+USER_ => MESSAGE (OneToMany)
