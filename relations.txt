@@ -8,17 +8,17 @@ RECIPE => COMMENT (OneToMany)
 
 RECIPE => PHOTO (OneToMany)
 
-RECIPE => COLLECTION (ManyToMany)
+RECIPE => COMPILATION (ManyToMany)
 
 RECIPE => favorite (OneToMany)
 
 favorite => USER_ (ManyToOne)
 
-COLLECTION => TAG (ManyToMany)
+COMPILATION => TAG (ManyToMany)
 
-COLLECTION => USER_ (ManyToOne)
+COMPILATION => USER_ (ManyToOne)
 
-COLLECTION => save (OneToMany)
+COMPILATION => save (OneToMany)
 
 save => USER_ (ManyToOne)
 
