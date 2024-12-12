@@ -1,5 +1,3 @@
->:)
-
 RECIPE => CATEGORY (ManyToOne)
 
 RECIPE => contain_ (OneToMany)
@@ -18,7 +16,11 @@ favorite => USER_ (ManyToOne)
 
 COLLECTION => TAG (ManyToMany)
 
-COLLECTION => USER_ (ManyToMany)
+COLLECTION => USER_ (ManyToOne)
+
+COLLECTION => save (OneToMany)
+
+save => USER_ (ManyToOne)
 
 USER_ => COMMENT (OneToMany)
 
