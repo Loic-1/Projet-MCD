@@ -49,7 +49,10 @@ CREATE TABLE IF NOT EXISTS `comment` (
   CONSTRAINT `FK_9474526CA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.comment : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.comment : ~2 rows (environ)
+INSERT INTO `comment` (`id`, `title`, `content`, `creation_date`, `user_id`, `recipe_id`) VALUES
+	(1, 'comment1', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ut amet quia veniam, exercitationem dolorum doloribus maiores. A, iusto suscipit! Explicabo, cupiditate sint quos officia nihil deleniti veritatis excepturi nostrum.', '2024-12-13 16:14:26', 6, 5),
+	(2, 'comment2', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque ut amet quia veniam, exercitationem dolorum doloribus maiores. A, iusto suscipit! Explicabo, cupiditate sint quos officia nihil deleniti veritatis excepturi nostrum.', '2024-12-13 16:17:24', 5, 5);
 
 -- Listage de la structure de table projet-dwwm-loic. compilation
 CREATE TABLE IF NOT EXISTS `compilation` (
