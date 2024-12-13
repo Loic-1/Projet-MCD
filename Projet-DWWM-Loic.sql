@@ -22,18 +22,23 @@ USE `projet-dwwm-loic`;
 -- Listage de la structure de table projet-dwwm-loic. category
 CREATE TABLE IF NOT EXISTS `category` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `photo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alt` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.category : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.category : ~3 rows (environ)
+INSERT INTO `category` (`id`, `name`, `photo`, `alt`) VALUES
+	(2, 'Entrée', 'tmp', NULL),
+	(3, 'Plat', 'tmp', NULL),
+	(4, 'Dessert', 'tmp', NULL);
 
 -- Listage de la structure de table projet-dwwm-loic. comment
 CREATE TABLE IF NOT EXISTS `comment` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `creation_date` datetime NOT NULL,
   `user_id` int NOT NULL,
   `recipe_id` int NOT NULL,
@@ -49,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
 -- Listage de la structure de table projet-dwwm-loic. compilation
 CREATE TABLE IF NOT EXISTS `compilation` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_AD5F8DF2A76ED395` (`user_id`),
@@ -63,15 +68,20 @@ CREATE TABLE IF NOT EXISTS `contain` (
   `id` int NOT NULL AUTO_INCREMENT,
   `recipe_id` int NOT NULL,
   `ingredient_id` int NOT NULL,
-  `quantity` int NOT NULL,
+  `quantity` double NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_4BEFF7C859D8A214` (`recipe_id`),
   KEY `IDX_4BEFF7C8933FE08C` (`ingredient_id`),
   CONSTRAINT `FK_4BEFF7C859D8A214` FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`id`),
   CONSTRAINT `FK_4BEFF7C8933FE08C` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredient` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.contain : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.contain : ~4 rows (environ)
+INSERT INTO `contain` (`id`, `recipe_id`, `ingredient_id`, `quantity`) VALUES
+	(5, 5, 3, 10),
+	(6, 5, 6, 1),
+	(7, 5, 7, 0.2),
+	(8, 5, 2, 10);
 
 -- Listage de la structure de table projet-dwwm-loic. favorite
 CREATE TABLE IF NOT EXISTS `favorite` (
@@ -105,13 +115,20 @@ CREATE TABLE IF NOT EXISTS `friend` (
 -- Listage de la structure de table projet-dwwm-loic. ingredient
 CREATE TABLE IF NOT EXISTS `ingredient` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price_unit` int NOT NULL,
-  `unit` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price_unit` double NOT NULL,
+  `unit` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.ingredient : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.ingredient : ~6 rows (environ)
+INSERT INTO `ingredient` (`id`, `name`, `price_unit`, `unit`) VALUES
+	(2, 'Sel', 0.25, 'g'),
+	(3, 'Poivre', 0.25, 'g'),
+	(4, 'Farine', 0.6, 'kg'),
+	(5, 'Sucre', 1.5, 'kg'),
+	(6, 'Salade', 1, 'u'),
+	(7, 'Thon', 25, 'kg');
 
 -- Listage de la structure de table projet-dwwm-loic. message
 CREATE TABLE IF NOT EXISTS `message` (
@@ -132,9 +149,9 @@ CREATE TABLE IF NOT EXISTS `message` (
 -- Listage de la structure de table projet-dwwm-loic. messenger_messages
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `headers` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue_name` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `headers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue_name` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `available_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `delivered_at` datetime DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)',
@@ -149,29 +166,46 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
 -- Listage de la structure de table projet-dwwm-loic. photo
 CREATE TABLE IF NOT EXISTS `photo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `alt` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `recipe_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_14B7841859D8A214` (`recipe_id`),
   CONSTRAINT `FK_14B7841859D8A214` FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.photo : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.photo : ~4 rows (environ)
+INSERT INTO `photo` (`id`, `url`, `alt`, `recipe_id`) VALUES
+	(5, 'https://th.bing.com/th/id/OIP.J5F_fEX8aB4O9Hw5WwfE9QHaHa?w=175&h=180&c=7&r=0&o=5&pid=1.7', 'Éclair au chocolat', 7),
+	(6, 'https://www.twofatbellies.com/wp-content/uploads/2011/03/SLR-Feb-March-387.jpg', 'Steak frites', 6),
+	(7, 'https://bing.com/th?id=OSK.996621e554ec268329972d6e4714a4ab', 'Salade niçoise', 5),
+	(8, 'https://th.bing.com/th/id/R.d1c2ae27164edad7393c57e84c328bd8?rik=HfcFN28zMnBQWg&pid=ImgRaw&r=0', 'Salade niçoise', 5);
 
 -- Listage de la structure de table projet-dwwm-loic. recipe
 CREATE TABLE IF NOT EXISTS `recipe` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `preparation_time` int NOT NULL,
-  `instructions` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `note` double NOT NULL,
+  `instructions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `note` double DEFAULT NULL,
   `category_id` int NOT NULL,
+  `user_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_DA88B13712469DE2` (`category_id`),
-  CONSTRAINT `FK_DA88B13712469DE2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `IDX_DA88B137A76ED395` (`user_id`),
+  CONSTRAINT `FK_DA88B13712469DE2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `FK_DA88B137A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.recipe : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.recipe : ~7 rows (environ)
+INSERT INTO `recipe` (`id`, `name`, `preparation_time`, `instructions`, `note`, `category_id`, `user_id`) VALUES
+	(5, 'Salade niçoise', 10, 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.', 10, 2, 5),
+	(6, 'Steak frites', 10, 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.', 10, 3, 5),
+	(7, 'Éclair au chocolat', 10, 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.', 10, 4, 5),
+	(27, 'test connecté', 111, 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.', 4, 2, 5),
+	(28, 'test connecté', 111, 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.', NULL, 3, 5),
+	(29, 'test connecté', 111, 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.', NULL, 2, 5),
+	(30, 'test Connecté', 11, 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit perferendis amet expedita eligendi dignissimos numquam assumenda adipisci quo! Quae, magni eveniet quaerat provident id temporibus inventore reiciendis ipsum eligendi magnam.', NULL, 2, 5);
 
 -- Listage de la structure de table projet-dwwm-loic. recipe_compilation
 CREATE TABLE IF NOT EXISTS `recipe_compilation` (
@@ -185,6 +219,21 @@ CREATE TABLE IF NOT EXISTS `recipe_compilation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table projet-dwwm-loic.recipe_compilation : ~0 rows (environ)
+
+-- Listage de la structure de table projet-dwwm-loic. reset_password_request
+CREATE TABLE IF NOT EXISTS `reset_password_request` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `selector` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hashed_token` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `requested_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
+  `expires_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
+  PRIMARY KEY (`id`),
+  KEY `IDX_7CE748AA76ED395` (`user_id`),
+  CONSTRAINT `FK_7CE748AA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table projet-dwwm-loic.reset_password_request : ~0 rows (environ)
 
 -- Listage de la structure de table projet-dwwm-loic. save
 CREATE TABLE IF NOT EXISTS `save` (
@@ -204,7 +253,7 @@ CREATE TABLE IF NOT EXISTS `save` (
 -- Listage de la structure de table projet-dwwm-loic. tag
 CREATE TABLE IF NOT EXISTS `tag` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -226,19 +275,23 @@ CREATE TABLE IF NOT EXISTS `tag_compilation` (
 -- Listage de la structure de table projet-dwwm-loic. user
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pseudo` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pseudo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `registration_date` datetime NOT NULL,
   `profile_picture` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `biography` longtext COLLATE utf8mb4_unicode_ci,
+  `alt` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `biography` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `roles` json NOT NULL,
   `is_verified` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.user : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.user : ~2 rows (environ)
+INSERT INTO `user` (`id`, `email`, `pseudo`, `password`, `registration_date`, `profile_picture`, `alt`, `biography`, `roles`, `is_verified`) VALUES
+	(5, 'user1@test.fr', 'user1', '$2y$13$MFIFx30jEGVNIWSsN2/6KuLgjgryw5AUuAc8/XFLK/lLE/YsuNwC2', '2024-12-13 07:39:35', NULL, NULL, NULL, '[]', 1),
+	(6, 'user2@test.fr', 'user2', '$2y$13$/xJGxlnjBSHp4gBktAGwxeCXKS0W167WkdIZyGOzZvlQuaOGyvT.y', '2024-12-13 15:02:21', NULL, NULL, NULL, '[]', 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
