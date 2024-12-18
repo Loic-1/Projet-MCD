@@ -1,2 +1,2 @@
-![MCD](MCD.png)
-![MLD](MLD.png)
+![MCD](MCD.PNG)
+![MLD](MLD.PNG)
