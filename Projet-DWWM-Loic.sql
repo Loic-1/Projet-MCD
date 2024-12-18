@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alt` longtext COLLATE utf8mb4_unicode_ci,
+  `alt` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -119,25 +119,6 @@ CREATE TABLE IF NOT EXISTS `favorite` (
 
 -- Listage des données de la table projet-dwwm-loic.favorite : ~0 rows (environ)
 
--- Listage de la structure de table projet-dwwm-loic. friend
-CREATE TABLE IF NOT EXISTS `friend` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `follower_id` int NOT NULL,
-  `followee_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `IDX_55EEAC61AC24F853` (`follower_id`),
-  KEY `IDX_55EEAC6161EA9775` (`followee_id`),
-  CONSTRAINT `FK_55EEAC6161EA9775` FOREIGN KEY (`followee_id`) REFERENCES `user` (`id`),
-  CONSTRAINT `FK_55EEAC61AC24F853` FOREIGN KEY (`follower_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Listage des données de la table projet-dwwm-loic.friend : ~4 rows (environ)
-INSERT INTO `friend` (`id`, `follower_id`, `followee_id`) VALUES
-	(1, 6, 5),
-	(2, 7, 5),
-	(5, 5, 6),
-	(6, 5, 7);
-
 -- Listage de la structure de table projet-dwwm-loic. ingredient
 CREATE TABLE IF NOT EXISTS `ingredient` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -192,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
 -- Listage de la structure de table projet-dwwm-loic. photo
 CREATE TABLE IF NOT EXISTS `photo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alt` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `recipe_id` int NOT NULL,
   PRIMARY KEY (`id`),
@@ -251,8 +232,8 @@ INSERT INTO `recipe_compilation` (`compilation_id`, `recipe_id`) VALUES
 CREATE TABLE IF NOT EXISTS `reset_password_request` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `selector` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `hashed_token` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `selector` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hashed_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `requested_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `expires_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   PRIMARY KEY (`id`),
@@ -326,6 +307,32 @@ INSERT INTO `user` (`id`, `email`, `pseudo`, `password`, `registration_date`, `p
 	(6, 'user2@test.fr', 'user2', '$2y$13$/xJGxlnjBSHp4gBktAGwxeCXKS0W167WkdIZyGOzZvlQuaOGyvT.y', '2024-12-13 15:02:21', NULL, NULL, NULL, '[]', 0),
 	(7, 'user3@test.fr', 'user3', '$2y$13$LFiKPyHT0Smqj3SE2da6uOw.NhE7BmPGRZRGhUMObQE0vNGLE2mnm', '2024-12-16 14:37:19', NULL, NULL, NULL, '[]', 0),
 	(8, 'user4@test.fr', 'user4', '$2y$13$gyUZQwxdKYwVayycZRpkFugRwP9zDrfZCQZwhM4unLXJn9jEAWF2a', '2024-12-17 15:53:03', NULL, NULL, NULL, '[]', 0);
+
+-- Listage de la structure de table projet-dwwm-loic. user_followees
+CREATE TABLE IF NOT EXISTS `user_followees` (
+  `user_source` int NOT NULL,
+  `user_target` int NOT NULL,
+  PRIMARY KEY (`user_source`,`user_target`),
+  KEY `IDX_816BF4D53AD8644E` (`user_source`),
+  KEY `IDX_816BF4D5233D34C1` (`user_target`),
+  CONSTRAINT `FK_816BF4D5233D34C1` FOREIGN KEY (`user_target`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_816BF4D53AD8644E` FOREIGN KEY (`user_source`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table projet-dwwm-loic.user_followees : ~0 rows (environ)
+
+-- Listage de la structure de table projet-dwwm-loic. user_followers
+CREATE TABLE IF NOT EXISTS `user_followers` (
+  `user_source` int NOT NULL,
+  `user_target` int NOT NULL,
+  PRIMARY KEY (`user_source`,`user_target`),
+  KEY `IDX_84E870433AD8644E` (`user_source`),
+  KEY `IDX_84E87043233D34C1` (`user_target`),
+  CONSTRAINT `FK_84E87043233D34C1` FOREIGN KEY (`user_target`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_84E870433AD8644E` FOREIGN KEY (`user_source`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table projet-dwwm-loic.user_followers : ~0 rows (environ)
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
