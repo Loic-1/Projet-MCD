@@ -319,7 +319,11 @@ CREATE TABLE IF NOT EXISTS `user_followees` (
   CONSTRAINT `FK_816BF4D53AD8644E` FOREIGN KEY (`user_source`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.user_followees : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.user_followees : ~1 rows (environ)
+INSERT INTO `user_followees` (`user_source`, `user_target`) VALUES
+	(5, 6),
+	(5, 7),
+	(5, 8);
 
 -- Listage de la structure de table projet-dwwm-loic. user_followers
 CREATE TABLE IF NOT EXISTS `user_followers` (
@@ -332,7 +336,11 @@ CREATE TABLE IF NOT EXISTS `user_followers` (
   CONSTRAINT `FK_84E870433AD8644E` FOREIGN KEY (`user_source`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.user_followers : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.user_followers : ~1 rows (environ)
+INSERT INTO `user_followers` (`user_source`, `user_target`) VALUES
+	(6, 5),
+	(7, 5),
+	(8, 5);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
