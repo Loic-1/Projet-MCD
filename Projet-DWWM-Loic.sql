@@ -52,9 +52,16 @@ CREATE TABLE IF NOT EXISTS `comment` (
   KEY `IDX_9474526C59D8A214` (`recipe_id`),
   CONSTRAINT `FK_9474526C59D8A214` FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`id`),
   CONSTRAINT `FK_9474526CA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.comment : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.comment : ~6 rows (environ)
+INSERT INTO `comment` (`id`, `title`, `content`, `creation_date`, `user_id`, `recipe_id`) VALUES
+	(9, 'gfedzsz', 'kjjhgf', '2024-12-24 09:42:05', 5, 35),
+	(10, 'hrtght', 'qgzgazgt\'(r', '2024-12-24 09:42:11', 5, 35),
+	(11, '3', '3', '2024-12-24 09:42:17', 5, 35),
+	(12, '4', '4', '2024-12-24 09:42:23', 5, 35),
+	(13, '5', '5', '2024-12-24 09:42:28', 5, 35),
+	(14, '6', '6', '2024-12-24 09:42:37', 5, 36);
 
 -- Listage de la structure de table projet-dwwm-loic. compilation
 CREATE TABLE IF NOT EXISTS `compilation` (
@@ -156,13 +163,16 @@ CREATE TABLE IF NOT EXISTS `photo` (
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `alt` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `recipe_id` int NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_14B7841859D8A214` (`recipe_id`),
   CONSTRAINT `FK_14B7841859D8A214` FOREIGN KEY (`recipe_id`) REFERENCES `recipe` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.photo : ~0 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.photo : ~2 rows (environ)
+INSERT INTO `photo` (`id`, `url`, `alt`, `recipe_id`, `name`) VALUES
+	(9, NULL, NULL, 37, 'dfbf0a80ffbbebdaf9a332777be28147.webp'),
+	(10, NULL, NULL, 37, '8b4b44b63a55e9b345e8d85a2fcdf200.webp');
 
 -- Listage de la structure de table projet-dwwm-loic. recipe
 CREATE TABLE IF NOT EXISTS `recipe` (
@@ -178,12 +188,13 @@ CREATE TABLE IF NOT EXISTS `recipe` (
   KEY `IDX_DA88B137A76ED395` (`user_id`),
   CONSTRAINT `FK_DA88B13712469DE2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
   CONSTRAINT `FK_DA88B137A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table projet-dwwm-loic.recipe : ~2 rows (environ)
+-- Listage des données de la table projet-dwwm-loic.recipe : ~3 rows (environ)
 INSERT INTO `recipe` (`id`, `name`, `preparation_time`, `instructions`, `note`, `category_id`, `user_id`) VALUES
-	(35, 'Salade niçoise', 15, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error temporibus repudiandae exercitationem provident quos, porro quas ducimus sequi inventore, ut, enim animi nemo illo ipsum similique necessitatibus explicabo eaque recusandae.\r\nMollitia, eos sit nemo aperiam aspernatur autem odit, eaque quam quibusdam rerum aliquid blanditiis expedita maiores. Dicta, sunt expedita! Facilis sed magni placeat nobis assumenda vitae animi dolorem quas molestiae!\r\nRerum fugiat vero sunt placeat illum quos hic in, exercitationem distinctio officia dicta. Magnam magni tempore molestias, repudiandae tempora minus quod velit assumenda, id dolore aliquid aspernatur ratione reiciendis unde?\r\nOdit illo, dolore error tempore dicta officiis maxime enim quo corrupti ipsa magni quae obcaecati quasi magnam culpa cumque delectus saepe ut laboriosam aut numquam sed at accusantium ratione? Nesciunt!\r\nDicta, vero eligendi? Beatae, veniam quod voluptate, tenetur assumenda dicta laborum repellat maxime itaque quas cupiditate! Hic beatae neque et cupiditate. Voluptate alias nesciunt quas et sapiente repellat id. Dicta.', NULL, 2, 5),
-	(36, 'Steak frites', 15, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error temporibus repudiandae exercitationem provident quos, porro quas ducimus sequi inventore, ut, enim animi nemo illo ipsum similique necessitatibus explicabo eaque recusandae.\r\nMollitia, eos sit nemo aperiam aspernatur autem odit, eaque quam quibusdam rerum aliquid blanditiis expedita maiores. Dicta, sunt expedita! Facilis sed magni placeat nobis assumenda vitae animi dolorem quas molestiae!\r\nRerum fugiat vero sunt placeat illum quos hic in, exercitationem distinctio officia dicta. Magnam magni tempore molestias, repudiandae tempora minus quod velit assumenda, id dolore aliquid aspernatur ratione reiciendis unde?\r\nOdit illo, dolore error tempore dicta officiis maxime enim quo corrupti ipsa magni quae obcaecati quasi magnam culpa cumque delectus saepe ut laboriosam aut numquam sed at accusantium ratione? Nesciunt!\r\nDicta, vero eligendi? Beatae, veniam quod voluptate, tenetur assumenda dicta laborum repellat maxime itaque quas cupiditate! Hic beatae neque et cupiditate. Voluptate alias nesciunt quas et sapiente repellat id. Dicta.', NULL, 3, 5);
+	(35, 'Salade niçoise', 15, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error temporibus repudiandae exercitationem provident quos, porro quas ducimus sequi inventore, ut, enim animi nemo illo ipsum similique necessitatibus explicabo eaque recusandae.\r\nMollitia, eos sit nemo aperiam aspernatur autem odit, eaque quam quibusdam rerum aliquid blanditiis expedita maiores. Dicta, sunt expedita! Facilis sed magni placeat nobis assumenda vitae animi dolorem quas molestiae!\r\nRerum fugiat vero sunt placeat illum quos hic in, exercitationem distinctio officia dicta. Magnam magni tempore molestias, repudiandae tempora minus quod velit assumenda, id dolore aliquid aspernatur ratione reiciendis unde?\r\nOdit illo, dolore error tempore dicta officiis maxime enim quo corrupti ipsa magni quae obcaecati quasi magnam culpa cumque delectus saepe ut laboriosam aut numquam sed at accusantium ratione? Nesciunt!\r\nDicta, vero eligendi? Beatae, veniam quod voluptate, tenetur assumenda dicta laborum repellat maxime itaque quas cupiditate! Hic beatae neque et cupiditate. Voluptate alias nesciunt quas et sapiente repellat id. Dicta.', 8, 2, 5),
+	(36, 'Steak frites', 15, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error temporibus repudiandae exercitationem provident quos, porro quas ducimus sequi inventore, ut, enim animi nemo illo ipsum similique necessitatibus explicabo eaque recusandae.\r\nMollitia, eos sit nemo aperiam aspernatur autem odit, eaque quam quibusdam rerum aliquid blanditiis expedita maiores. Dicta, sunt expedita! Facilis sed magni placeat nobis assumenda vitae animi dolorem quas molestiae!\r\nRerum fugiat vero sunt placeat illum quos hic in, exercitationem distinctio officia dicta. Magnam magni tempore molestias, repudiandae tempora minus quod velit assumenda, id dolore aliquid aspernatur ratione reiciendis unde?\r\nOdit illo, dolore error tempore dicta officiis maxime enim quo corrupti ipsa magni quae obcaecati quasi magnam culpa cumque delectus saepe ut laboriosam aut numquam sed at accusantium ratione? Nesciunt!\r\nDicta, vero eligendi? Beatae, veniam quod voluptate, tenetur assumenda dicta laborum repellat maxime itaque quas cupiditate! Hic beatae neque et cupiditate. Voluptate alias nesciunt quas et sapiente repellat id. Dicta.', 5, 3, 5),
+	(37, 'Loïc', 1474, '3211436', 10, 2, 7);
 
 -- Listage de la structure de table projet-dwwm-loic. recipe_compilation
 CREATE TABLE IF NOT EXISTS `recipe_compilation` (
